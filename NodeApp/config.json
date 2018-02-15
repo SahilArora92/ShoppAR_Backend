@@ -1,0 +1,6 @@
+{
+    "GCLOUD_PROJECT": "shopparbackend",
+    "DATA_BACKEND": "mongodb",
+    "MONGO_URL": "mongodb://shoppar:12345678@ds227168.mlab.com:27168/shoppardb",
+    "MONGO_COLLECTION": "product"
+  }
