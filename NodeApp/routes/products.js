@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); 
-
+var fs= require('fs');
 mongoose.connect('mongodb://shoppar:12345678@ds227168.mlab.com:27168/shoppardb',function(){})
   .catch(err => { 
   // mongoose connection error will be handled here
@@ -9,29 +9,18 @@ mongoose.connect('mongodb://shoppar:12345678@ds227168.mlab.com:27168/shoppardb',
   process.exit(1);
 });
 
-var Schema=mongoose.Schema;
+//load all files in models dir
 
-var productDataSchema=new Schema({
-  name: {type:String,required:true},
-  maker: String,
-  price: Number
-  //custom validator
-  // price: {type:Number,
-  // validate:{
-  //   validator:function(text){
-  //     return text==12;
-  //   },
-  //   message:'Wrong type'
-  // }
-},
-  {collection:'product'},
-  {versionKey:false}
-);
+fs.readdirSync(__dirname+'/../models').forEach(function(filename){
+  if(~filename.indexOf('.js')) 
+  require(__dirname+'/../models/'+filename);
+});
 
-var Products=mongoose.model('Products',productDataSchema);
+var Products=mongoose.model('products');
 
+//dummy data
 var prodItem={
-  name: "Soft Soap",
+  //name: "Soft Soap",
   maker: "Binoy",
   price: 12
 };
@@ -40,6 +29,8 @@ var prodItem={
 router.get('/',(req, res, next)=> {
   res.send('respond with a resource');
 });
+
+
 
 router.get('/data',(req, res, next)=> {
   Products.find()
@@ -54,8 +45,14 @@ router.get('/create',(req,res,next)=>{
     if(!!err)
     console.log(err.message);
   });
-  
   Products.find()
+  .then(function(doc){
+    res.send(doc);
+  });
+});
+
+router.get('/:id',(req, res, next)=> {
+  Products.find({_id:req.params.id})
   .then(function(doc){
     res.send(doc);
   });
