@@ -17,5 +17,6 @@ var productDataSchema=new Schema({
     {collection: 'product'},
     {versionKey: false}
   );
-
+  
+//Schema Registeration
 mongoose.model('products',productDataSchema);
