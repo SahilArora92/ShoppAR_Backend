@@ -28,13 +28,13 @@ router.get('/',(req, res, next)=> {
   router.post('/modify',(req, res)=> {
     Checklist.remove({}).exec();
     var body = req.body;
-    res.set('Content-Type', 'text/plain');
+    res.set('Content-Type', 'application/json');
     Checklist.insertMany(body.items, function(error, docs) {
       if(error){
-        res.send("Update Failed");
+        res.status(999).send({"message":"Failed"});
       }
       else{
-        res.send("Successfully added");
+        res.send({"message":"Successfully Added"});
       }
     });
     
