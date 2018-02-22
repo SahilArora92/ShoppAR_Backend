@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var products = require('./routes/products');
 var checklist = require('./routes/checklist');
-
+var recommendation=require('./routes/recommendation');
 var app = express();
 
 // view engine setup
@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/products', products);
 app.use('/checklist', checklist);
+app.use('/recommendation', recommendation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
