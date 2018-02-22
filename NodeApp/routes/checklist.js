@@ -21,7 +21,7 @@ router.get('/',(req, res, next)=> {
     //send back the retreived checklist
     Checklist.find()
     .then(function(doc){
-      res.send(doc);
+      res.send({"items":doc});
   });
 });
   
