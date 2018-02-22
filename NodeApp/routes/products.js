@@ -49,7 +49,8 @@ router.get('/create',(req,res,next)=>{
 router.get('/:id',(req, res, next)=> {
   Products.find({_id:req.params.id})
   .then(function(doc){
-    res.send({"product":doc});
+    //getting the first object
+    res.send({"product":doc[0]});
   });
 });
 
