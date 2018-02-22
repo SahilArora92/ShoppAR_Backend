@@ -1,19 +1,29 @@
 var mongoose = require('mongoose'); 
 var Schema = mongoose.Schema;
 //schema definition
-var productDataSchema=new Schema({
-    name: {type:String,required:true},
-    maker: String,
-    price: Number
-    //custom validator
-    // price: {type:Number,
-    // validate:{
-    //   validator:function(text){
-    //     return text==12;
-    //   },
-    //   message:'Wrong type'
-    // }
-  },
+var productDataSchema=new Schema(
+    "name": String,
+    "maker": String,
+    "price": Number,
+    "upc": String,
+    "category": String,
+    "size": String,
+    "nutrition": {
+        "servingsize": String,
+        "calories": Number,
+        "fat": {
+            "total": String,
+            "saturatedfat": String,
+            "polyunsaturated": String,
+            "monounsaturated": String
+        },
+        "cholesterol": String,
+        "sodium": String,
+        "carbohydrate": String,
+        "protein": String,
+        "fiber": String
+    },
+    "images": Array,
     {collection: 'product'},
     {versionKey: false}
   );
