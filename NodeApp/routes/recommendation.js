@@ -32,7 +32,7 @@ router.get('/:id',(req, res, next)=> {
     var sProdCategory = jProduct[0].category; 
      Products.find({category:sProdCategory})
   .then(function(doc){
-     res.send({"recommendation":doc});
+     res.send({"product":doc});
   });
    
     }catch(e){
