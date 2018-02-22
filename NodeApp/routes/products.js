@@ -35,7 +35,7 @@ router.get('/',(req, res, next)=> {
 router.get('/data',(req, res, next)=> {
   Products.find()
   .then(function(doc){
-    res.send(doc);
+    res.send({"products":doc});
   });
 });
 
@@ -47,14 +47,14 @@ router.get('/create',(req,res,next)=>{
   });
   Products.find()
   .then(function(doc){
-    res.send(doc);
+    res.send({"products":doc});
   });
 });
 
 router.get('/:id',(req, res, next)=> {
   Products.find({_id:req.params.id})
   .then(function(doc){
-    res.send(doc);
+    res.send({"product":doc});
   });
 });
 
