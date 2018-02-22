@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'); 
 var Schema = mongoose.Schema;
 //schema definition
-var productDataSchema=new Schema(
+var productDataSchema=new Schema({
     "name": String,
     "maker": String,
     "price": Number,
@@ -23,7 +23,8 @@ var productDataSchema=new Schema(
         "protein": String,
         "fiber": String
     },
-    "images": Array,
+    "images": Array
+},
     {collection: 'product'},
     {versionKey: false}
   );
