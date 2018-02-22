@@ -27,17 +27,12 @@ var prodItem={
 
 /* GET users listing. */
 router.get('/',(req, res, next)=> {
-  res.send('respond with a resource');
-});
-
-
-
-router.get('/data',(req, res, next)=> {
   Products.find()
   .then(function(doc){
     res.send({"products":doc});
   });
 });
+
 
 router.get('/create',(req,res,next)=>{
   var data=new Products(prodItem);
