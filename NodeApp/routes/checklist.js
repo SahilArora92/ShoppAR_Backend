@@ -2,12 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); 
 var fs= require('fs');
-mongoose.connect('mongodb://shoppar:12345678@ds227168.mlab.com:27168/shoppardb',function(){})
-  .catch(err => { 
-  // mongoose connection error will be handled here
-  console.error('App starting error:', err.stack);
-  process.exit(1);
-});
 
 fs.readdirSync(__dirname+'/../models').forEach(function(filename){
     if(~filename.indexOf('.js')) 

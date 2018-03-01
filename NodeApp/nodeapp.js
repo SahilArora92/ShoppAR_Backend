@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -9,7 +10,21 @@ var index = require('./routes/index');
 var products = require('./routes/products');
 var checklist = require('./routes/checklist');
 var recommendation=require('./routes/recommendation');
+var cart=require('./routes/cart');
 var app = express();
+
+var mongoose = require('mongoose'); 
+
+/**
+ * Set DB URI
+ */
+
+mongoose.connect(process.env.DB_URI,function(){})
+  .catch(err => { 
+  // mongoose connection error will be handled here
+  console.error('App starting error:', err.stack);
+  process.exit(1);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +42,7 @@ app.use('/', index);
 app.use('/products', products);
 app.use('/checklist', checklist);
 app.use('/recommendation', recommendation);
+app.use('/cart', cart);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
