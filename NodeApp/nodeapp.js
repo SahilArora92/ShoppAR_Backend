@@ -9,6 +9,8 @@ var index = require('./routes/index');
 var products = require('./routes/products');
 var checklist = require('./routes/checklist');
 var recommendation=require('./routes/recommendation');
+var recipes=require('./routes/recipes');
+
 var app = express();
 
 // view engine setup
@@ -27,6 +29,7 @@ app.use('/', index);
 app.use('/products', products);
 app.use('/checklist', checklist);
 app.use('/recommendation', recommendation);
+app.use('/recipes', recipes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
