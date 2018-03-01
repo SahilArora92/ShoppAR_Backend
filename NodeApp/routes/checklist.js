@@ -21,7 +21,7 @@ router.get('/',(req, res, next)=> {
     //send back the retreived checklist
     Checklist.find()
     .then(function(doc){
-      res.send({"items":doc});
+      res.send({"products":doc});
   });
 });
   
@@ -29,7 +29,7 @@ router.get('/',(req, res, next)=> {
     Checklist.remove({}).exec();
     var body = req.body;
     res.set('Content-Type', 'application/json');
-    Checklist.insertMany(body.items, function(error, docs) {
+    Checklist.insertMany(body.products, function(error, docs) {
       if(error){
         res.status(999).send({"message":"Failed"});
       }
