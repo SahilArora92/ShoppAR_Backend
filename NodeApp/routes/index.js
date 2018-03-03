@@ -18,11 +18,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/searchProducts/:query', function(req, res, next) {
+router.get('/searchProducts/query/:query', function(req, res, next) {
   Products.find({$text: {$search: req.params.query}}, {score: {$meta: "textScore"}}).sort({score:{$meta:"textScore"}})
   .then(function(doc){
     //getting the first object
     res.send(doc);
+  });
+});
+
+router.get('/product/id/:id',(req, res, next)=> {
+  Products.find({_id:req.params.id})
+  .then(function(doc){
+    //getting the first object
+    res.send({"product":doc[0]});
   });
 });
 
