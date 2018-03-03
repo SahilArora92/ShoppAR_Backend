@@ -36,7 +36,7 @@ router.get('/create',(req,res,next)=>{
   });
   Products.find()
   .then(function(doc){
-    res.send({"products":doc});
+    res.send(doc);
   });
 });
 

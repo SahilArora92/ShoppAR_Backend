@@ -30,7 +30,7 @@ router.get('/product/id/:id',(req, res, next)=> {
   Products.find({_id:req.params.id})
   .then(function(doc){
     //getting the first object
-    res.send({"product":doc[0]});
+    res.send(doc);
   });
 });
 
