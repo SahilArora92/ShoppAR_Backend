@@ -13,33 +13,24 @@ var Products=mongoose.model('products');
 /* GET users listing. */
 router.get('/',(req, res, next)=> {
     //send back the retreived checklist
+    var aChecklist=[];
+    var count=0;
     Checklist.find()
     .then(function(aChecklistDoc){
-      aChecklistDoc.forEach(jChecklistDoc => {
-        if(jChecklistDoc.length==0)
-          res.send(jChecklistDoc);
-        else
-          {
-            var id = jChecklistDoc._id;
-            var foundDocument;
-            Products.find({_id:id})
-              .then(function(foundProduct){
-            //getting the second object
-            //foundProduct = jProductDoc[0];
-            jChecklistDoc=JSON.parse(JSON.stringify(jChecklistDoc));
-            jChecklistDoc["product"]=foundProduct[0];
-            console.log(jChecklistDoc);
-            var tempPromise=new Promise((resolve,reject)=>{
-              
-            }).then(function(aChecklistDoc){
-              res.send(aChecklistDoc);
-            })
-            //console.log("Found Document");
-            //res.send(foundProduct);
+      for (let index = 0; index < aChecklistDoc.length; index++) {
+        var jChecklistDoc = aChecklistDoc[index];
+          var id = jChecklistDoc._id;
+          Products.find({_id:id})
+            .then(function(foundProduct){
+              jChecklistDoc=JSON.parse(JSON.stringify(jChecklistDoc));
+              jChecklistDoc["product"]=foundProduct[0];
+              aChecklist.push(jChecklistDoc);
+              count++;
+              if(count==aChecklistDoc.length)
+                res.send(aChecklist);
             });
-          }  
-      });
-      //res.send(aChecklistDoc);
+        }
+        
   });
 });
   
