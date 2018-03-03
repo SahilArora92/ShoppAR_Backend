@@ -10,7 +10,7 @@ var index = require('./routes/index');
 var products = require('./routes/products');
 var checklist = require('./routes/checklist');
 var recommendation=require('./routes/recommendation');
-var cart=require('./routes/cart');
+//var cart=require('./routes/cart');
 var recipes=require('./routes/recipes');
 
 var app = express();
@@ -44,7 +44,7 @@ app.use('/', index);
 app.use('/products', products);
 app.use('/checklist', checklist);
 app.use('/recommendation', recommendation);
-app.use('/cart', cart);
+//app.use('/cart', cart);
 app.use('/recipes', recipes);
 
 // catch 404 and forward to error handler
