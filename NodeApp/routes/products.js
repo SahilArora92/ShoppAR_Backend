@@ -36,16 +36,10 @@ router.get('/create',(req,res,next)=>{
   });
   Products.find()
   .then(function(doc){
-    res.send({"products":doc});
+    res.send(doc);
   });
 });
 
-router.get('/:id',(req, res, next)=> {
-  Products.find({_id:req.params.id})
-  .then(function(doc){
-    //getting the first object
-    res.send({"product":doc[0]});
-  });
-});
+
 
 module.exports = router;

@@ -18,7 +18,7 @@ router.get('/',(req, res, next)=> {
   res.send('Recommendations');
 });
 
-router.get('/:id',(req, res, next)=> {
+router.get('/productId/:id',(req, res, next)=> {
   Products.find({_id:req.params.id})
   .then(function(doc){
     try{
