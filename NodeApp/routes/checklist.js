@@ -9,13 +9,21 @@ fs.readdirSync(__dirname+'/../models').forEach(function(filename){
   });
 
 var Checklist=mongoose.model('checklist');
-
+var Products=mongoose.model('products');
 /* GET users listing. */
 router.get('/',(req, res, next)=> {
     //send back the retreived checklist
     Checklist.find()
-    .then(function(doc){
-      res.send(doc);
+    .then(function(doc1){
+    	var id = doc1[0]._id;
+    	Products.find({_id:id})
+  .then(function(doc2){
+    //getting the second object
+   
+    doc1[0]["product"]=doc2;
+    res.send(doc1);
+  });
+      
   });
 });
   
