@@ -22,7 +22,7 @@ router.get('/searchProducts/:query', function(req, res, next) {
   Products.find({$text: {$search: req.params.query}}, {score: {$meta: "textScore"}}).sort({score:{$meta:"textScore"}})
   .then(function(doc){
     //getting the first object
-    res.send({"products":doc});
+    res.send(doc);
   });
 });
 

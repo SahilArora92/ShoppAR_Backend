@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 //schema definition
 var checklistDataSchema=new Schema({
     name: {type:String,required:true},
-    quantity: String,
+    quantity: Number,
     isPurchased:Number
   },
     {collection: 'checklist'},

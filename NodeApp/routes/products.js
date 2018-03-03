@@ -23,7 +23,7 @@ var prodItem={
 router.get('/',(req, res, next)=> {
   Products.find()
   .then(function(doc){
-    res.send({"products":doc});
+    res.send(doc);
   });
 });
 

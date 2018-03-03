@@ -10,7 +10,8 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/NodeApp/bin/www",
-            "protocol": "inspector"
+            "protocol": "inspector",
+            "envFile": "${workspaceFolder}/NodeApp/.env"
         }
     ]
 }

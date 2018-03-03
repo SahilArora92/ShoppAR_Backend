@@ -3,9 +3,10 @@ var Schema = mongoose.Schema;
 
 //schema definition
 var cartDataSchema=new Schema({
-    id: {type:String,required:true},
-    productId: String,
-    quantity:Number
+    _id: {type:String,required:true},
+    quantity:Number,
+    totalPrice:Number,
+    taxPercentage:Number
   },
     {collection: 'cart'},
     {versionKey: false}
