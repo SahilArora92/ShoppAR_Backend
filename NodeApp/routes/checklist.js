@@ -14,16 +14,32 @@ var Products=mongoose.model('products');
 router.get('/',(req, res, next)=> {
     //send back the retreived checklist
     Checklist.find()
-    .then(function(doc1){
-    	var id = doc1[0]._id;
-    	Products.find({_id:id})
-  .then(function(doc2){
-    //getting the second object
-   
-    doc1[0]["product"]=doc2;
-    res.send(doc1);
-  });
-      
+    .then(function(aChecklistDoc){
+      aChecklistDoc.forEach(jChecklistDoc => {
+        if(jChecklistDoc.length==0)
+          res.send(jChecklistDoc);
+        else
+          {
+            var id = jChecklistDoc._id;
+            var foundDocument;
+            Products.find({_id:id})
+              .then(function(foundProduct){
+            //getting the second object
+            //foundProduct = jProductDoc[0];
+            jChecklistDoc=JSON.parse(JSON.stringify(jChecklistDoc));
+            jChecklistDoc["product"]=foundProduct[0];
+            console.log(jChecklistDoc);
+            var tempPromise=new Promise((resolve,reject)=>{
+              
+            }).then(function(aChecklistDoc){
+              res.send(aChecklistDoc);
+            })
+            //console.log("Found Document");
+            //res.send(foundProduct);
+            });
+          }  
+      });
+      //res.send(aChecklistDoc);
   });
 });
   
