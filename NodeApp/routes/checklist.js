@@ -12,7 +12,7 @@ var Checklist=mongoose.model('checklist');
 var Products=mongoose.model('products');
 
 router.get('/',(req, res, next)=> {
-  //send back the retreived checklist
+  //send back the retreived checklist with added product info
   var aChecklist=[];
   Products.find()
   .then(function(doc){
@@ -33,7 +33,31 @@ router.get('/',(req, res, next)=> {
       });
   }); 
 });
-  
+
+  //add checklist item to cart by changing isPurchased to 1
+  router.post('/addToCart',(req,res)=>{
+    res.set('Content-Type', 'application/json');
+    var id;
+    //null id check
+    if(req.body._id!=undefined)
+    {
+      id=req.body._id;
+      Checklist.findById(id,function(error,doc){
+        if(error){
+          res.status(999).send({"message":"Failed"});
+        }
+        else{
+          doc["isPurchased"]=1;
+          doc.save();
+          res.send({"message":"Successfully Added"});
+        }
+      });
+    }
+    else
+    res.status(999).send({"message":"Failed"}); 
+  });
+
+  //Rewrite the whole checklist
   router.post('/modify',(req, res)=> {
     Checklist.remove({}).exec();
     var body = req.body;
