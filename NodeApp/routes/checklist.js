@@ -10,28 +10,28 @@ fs.readdirSync(__dirname+'/../models').forEach(function(filename){
 
 var Checklist=mongoose.model('checklist');
 var Products=mongoose.model('products');
-/* GET users listing. */
+
 router.get('/',(req, res, next)=> {
-    //send back the retreived checklist
-    var aChecklist=[];
-    var count=0;
+  //send back the retreived checklist
+  var aChecklist=[];
+  Products.find()
+  .then(function(doc){
     Checklist.find()
-    .then(function(aChecklistDoc){
-      for (let index = 0; index < aChecklistDoc.length; index++) {
-        var jChecklistDoc = aChecklistDoc[index];
-          var id = jChecklistDoc._id;
-          Products.find({_id:id})
-            .then(function(foundProduct){
-              jChecklistDoc=JSON.parse(JSON.stringify(jChecklistDoc));
-              jChecklistDoc["product"]=foundProduct[0];
-              aChecklist.push(jChecklistDoc);
-              count++;
-              if(count==aChecklistDoc.length)
-                res.send(aChecklist);
-            });
-        }
-        
-  });
+      .then(function(checklistDoc){
+        checklistDoc.forEach(checklistItem => {
+          var foundProd=doc.filter(function(elem){
+            return elem.id==checklistItem.id
+          });
+          checklistItem=JSON.parse(JSON.stringify(checklistItem));
+          delete checklistItem._id;
+          delete checklistItem.name;
+          delete checklistItem.__v;
+          checklistItem["product"]=foundProd[0];
+          aChecklist.push(checklistItem);
+        });
+        res.send(aChecklist);
+      });
+  }); 
 });
   
   router.post('/modify',(req, res)=> {
