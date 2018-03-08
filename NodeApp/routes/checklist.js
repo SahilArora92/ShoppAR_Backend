@@ -38,6 +38,7 @@ router.get('/',(req, res, next)=> {
   router.post('/addToCart',(req,res)=>{
     res.set('Content-Type', 'application/json');
     var id;
+    var body=req.body;
     //null id check
     if(req.body._id!=undefined)
     {
@@ -45,6 +46,17 @@ router.get('/',(req, res, next)=> {
       Checklist.findById(id,function(error,doc){
         if(error){
           res.status(999).send({"message":"Failed"});
+        }
+        else if(doc==null){
+          body["isPurchased"]=1;
+          Checklist.insertMany(body, function(error, doc) {
+            if(error){
+              res.status(999).send({"message":"Failed"});
+            }
+            else{
+              res.send({"message":"Successfully Added"});
+            }
+          });
         }
         else{
           doc["isPurchased"]=1;
