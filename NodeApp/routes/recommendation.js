@@ -18,24 +18,36 @@ router.get('/',(req, res, next)=> {
   res.send('Recommendations');
 });
 
-router.get('/productId/:id',(req, res, next)=> {
-  Products.find({_id:req.params.id})
-  .then(function(doc){
-    try{
-    var jProduct=doc;
-    var sProdCategory = jProduct[0].category; 
-     Products.find({category:sProdCategory})
-  .then(function(doc){
-     res.send(doc);
-  });
-   
-    }catch(e){
-    console.log(e.message); 
+router.get('/productId/:id', (req, res, next) => {
+    Products.find({
+            _id: req.params.id
+        })
+        .then(function(doc) {
+            try {
+                var jProduct = doc;
+                var sProdCategory = jProduct[0].category;
+                Products.find({
+                    $and: [{
+                            category: sProdCategory
+                        },
+                        {
+                            _id: {
+                                $ne: req.params.id  //to not show id of current item whose recommednations is being searched
+                            }
+                        }
+                    ]
+                }).then(function(response) {
+                    var oResponse = JSON.parse(JSON.stringify(response));
+                    res.send(response);
+                });
 
-    }
-   
-    
-  });
+            } catch (e) {
+                console.log(e.message);
+
+            }
+
+
+        });
 });
 
 module.exports = router;
