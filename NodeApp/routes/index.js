@@ -19,7 +19,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/searchProducts/query/:query', function(req, res, next) {
-  Products.find({$text: {$search: req.params.query}}, {score: {$meta: "textScore"}}).sort({score:{$meta:"textScore"}})
+	var sQuery=(req.params.query).toString();
+  Products.find({
+		$or: [{"name": {"$regex": ".*"+sQuery+".*","$options": "i"}}, 
+                {"maker": {"$regex": ".*"+sQuery+".*","$options": "i"}},
+                 {"category": {"$regex": ".*"+sQuery+".*","$options": "i"}}]
+	})
   .then(function(doc){
     //getting the first object
     res.send(doc);
