@@ -17,6 +17,8 @@ var app = express();
 
 var mongoose = require('mongoose'); 
 
+// Get Mongoose to use the global promise library
+mongoose.Promise=global.Promise;
 /**
  * Set DB URI
  */

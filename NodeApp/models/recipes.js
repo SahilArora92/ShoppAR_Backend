@@ -8,4 +8,4 @@ var recipesDataSchema=new Schema({
     {collection: 'recipes'},
     {versionKey: false}
   );
-mongoose.model('recipes',recipesDataSchema);
+  module.exports=mongoose.model('recipes',recipesDataSchema);

@@ -30,4 +30,4 @@ var productDataSchema=new Schema({
   );
   
 //Schema Registeration
-mongoose.model('products',productDataSchema);
+module.exports=mongoose.model('products',productDataSchema);

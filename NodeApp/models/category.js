@@ -8,4 +8,4 @@ var categoryDataSchema=new Schema({
     {collection: 'category'},
     {versionKey: false}
   );
-mongoose.model('category',categoryDataSchema);
+  module.exports=mongoose.model('category',categoryDataSchema);
