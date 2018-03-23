@@ -5,17 +5,17 @@ var mongoose = require('mongoose');
 var Products=require('../models/products');
 var Recipes=require('../models/recipes');
 
-/* GET users listing. */
+/* GET recipies listing and populate product. */
 router.get('/',(req, res, next)=> {
   Recipes.find()
-  .populate('products._id')
+  .populate('products.product')
   .then(function(doc){
     res.send(doc);
   });
 });
   
 
-/* GET users listing. */
+/* Add Recipe products to checklist. */
 router.get('/addToChecklist',(req, res, next)=> {
   Recipes.find()
   .then(function(doc){

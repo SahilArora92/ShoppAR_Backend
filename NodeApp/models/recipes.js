@@ -7,7 +7,7 @@ var recipesDataSchema=new Schema({
     image:{type:String},
     description:{type:String},
     products:[{
-      _id:{type:Schema.Types.ObjectId,ref:'products'},
+      product:{type:Schema.Types.ObjectId,ref:'products'},
       quantity:{type:Number,default:1}
     }]
   },
