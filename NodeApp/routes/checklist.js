@@ -69,7 +69,7 @@ router.get('/',(req, res, next)=> {
     var count = 0;
     res.set('Content-Type', 'application/json');
     body.forEach(element => {
-      Checklist.findByIdAndUpdate(element._id,{$inc: { quantity: element.quantity }},{new: true,upsert:true}, function(error, docs) {
+      Checklist.findByIdAndUpdate(element._id,{ quantity: element.quantity },{new: true,upsert:true}, function(error, docs) {
         if(error){
           console.log(error);
           res.status(999).send({"message":"Failed"});
