@@ -63,18 +63,24 @@ router.get('/',(req, res, next)=> {
     res.status(999).send({"message":"Failed"}); 
   });
 
-  //Rewrite the whole checklist
+  //modify checklist from search products
   router.post('/modify',(req, res)=> {
-    Checklist.remove({}).exec();
     var body = req.body;
+    var count = 0;
     res.set('Content-Type', 'application/json');
-    Checklist.insertMany(body, function(error, docs) {
-      if(error){
-        res.status(999).send({"message":"Failed"});
-      }
-      else{
-        res.send({"message":"Successfully Added"});
-      }
+    body.forEach(element => {
+      Checklist.findByIdAndUpdate(element._id,{$inc: { quantity: element.quantity }},{new: true,upsert:true}, function(error, docs) {
+        if(error){
+          console.log(error);
+          res.status(999).send({"message":"Failed"});
+        }
+        else{
+          console.log(docs);
+          count++;
+          if(body.length==count)
+          res.send({"message":"Successfully Added"});
+        }
+      });
     });
   });
 module.exports = router;
