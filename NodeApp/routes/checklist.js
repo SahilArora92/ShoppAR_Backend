@@ -66,9 +66,18 @@ router.get('/',(req, res, next)=> {
   //modify checklist from search products
   router.post('/modify',(req, res)=> {
     var body = req.body;
-    var count = 0;
+    //var count = 0;
+    Checklist.remove({}).exec();
     res.set('Content-Type', 'application/json');
-    body.forEach(element => {
+    Checklist.insertMany(body, function(error, docs) {
+           if(error){
+             res.status(999).send({"message":"Failed"});
+           }
+           else{
+             res.send({"message":"Successfully Added"});
+           }
+    });
+    /* body.forEach(element => {
       Checklist.findByIdAndUpdate(element._id,{ quantity: element.quantity },{new: true,upsert:true}, function(error, docs) {
         if(error){
           console.log(error);
@@ -81,6 +90,19 @@ router.get('/',(req, res, next)=> {
           res.send({"message":"Successfully Added"});
         }
       });
+    }); */
+  });
+  router.post('/clear',(req, res)=>{
+    res.set('Content-Type', 'application/json');
+    Checklist.remove({},function(err){
+      if(err){
+        res.status(999).json({
+          message:'Failed',
+          error:err
+        });
+      }else{
+        res.send({"message":"Successfully cleared"});
+      }
     });
   });
 module.exports = router;
